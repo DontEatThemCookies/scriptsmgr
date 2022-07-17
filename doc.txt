@@ -1,0 +1,58 @@
+scriptsmgr - David Costell's Scripts Manager
+A shell script to manage other scripts, I guess?
+v1.0 [7/17/2022]
+=======================================================================================
+[INTRODUCTION]
+
+Scripts Manager is a script (written with Bash in mind, though compatibility with other shells like zsh should work fine)
+to manage other scripts. Not anything significantly revolutionary or useful - this project's purpose is mainly for learning.
+=======================================================================================
+[USAGE]
+
+./scriptsmgr.sh [action] {additional arguments}
+
+[action] can be one of the following: run, edit, about
+=======================================================================================
+[ACTIONS]
+
+run [filename]: Attempts to run "$SCRIPT_DIR/[filename].sh" with your $PREF_SHELL
+edit [filename]: Attempts to open "$SCRIPT_DIR/[filename].sh" with your $PREF_EDITOR
+about: Shows about information, including the text that probably led you to this file in the first place
+=======================================================================================
+[CONFIG]
+
+What were those variables?? $SCRIPT_DIR, $PREF_SHELL?? Those are configurable variables
+that this section will proceed to go in-depth on.
+
+Inside scriptsmgr.sh, there is a section of variable declarations marked by the comments
+# CONFIG
+and...
+# END CONFIG
+These are, you guessed it, meant to be configured by the end-user if they wish to do so.
+
+$SCRIPT_DIR (string): This should be a valid directory path. This is where scriptsmgr
+looks for the scripts it manages.
+Example: "/home/user/scripts"
+
+$PREF_EDITOR (string): This should be the name of a text editing program of your choice.
+This will be the program scriptsmgr will use when invoked with the [edit] action.
+Examples: "vi", "nano", "gedit"
+
+$PREF_SHELL (string): This should be the name of a shell of your choice. This will be the 
+shell program scriptsmgr will use when it runs a script ([run] action).
+Examples: "sh", "bash", "zsh"
+
+$NO_ERR_MSG (number): This is a setting controlling whether scriptsmgr outputs to the
+console that an error has been encountered. Set to a non-zero number to disable.
+Examples: 0, 1, 42
+=======================================================================================
+[CHANGELOG]
+
+1.0 (07/17/2022): Initial release
+=======================================================================================
+[EPILOGUE]
+
+This concludes the complete documentation of scriptsmgr. Feel free to contact the dev
+regarding this software or this documentation (issues, suggestions, the whole 9 yards)
+=======================================================================================
+
