@@ -5,11 +5,11 @@
 SCRIPTS_DIR="/home/$(whoami)/scripts" # The directory containing your scripts
 PREF_EDITOR="nano" # Your preferred editor (e.g. vi, nano)
 PREF_SHELL="bash" # Your preferred editor (e.g. bash, zsh)
-NO_ERR_MSG=1 # If this is set to a non-zero number errormsg() won't output anything
+NO_ERR_MSG=0 # If this is set to a non-zero number errormsg() won't output anything
 # CONFIG END
 
 errormsg() {
-	[ $NO_ERR_MSG -ne 1 ] && (printf "Error encountered, exiting with status $1\n"; exit $1)
+	[ $NO_ERR_MSG -ne 0 ] || (printf "Error encountered, exiting with status $1\n"; exit $1)
 }
 
 case $1 in
