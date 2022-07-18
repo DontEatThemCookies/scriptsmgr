@@ -2,6 +2,8 @@
 Personal pet project with the goal of expanding my Bash knowledge. Not something with real-world applications or anything like that.
 It's exactly what its name describes. Full documentation is in doc.txt
 
+Tested on Raspberry Pi OS (based on Debian)
+
 ## Install
 ```sh
 curl -fsSL https://raw.githubusercontent.com/DontEatThemCookies/scriptsmgr/main/scriptsmgr.sh > scriptsmgr.sh

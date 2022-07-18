@@ -1,21 +1,26 @@
 scriptsmgr - David Costell's Scripts Manager
 A shell script to manage other scripts, I guess?
-v1.0 [7/17/2022]
+v1.1 [7/18/2022]
 =======================================================================================
 [INTRODUCTION]
 
 Scripts Manager is a script (written with Bash in mind, though compatibility with other shells like zsh should work fine)
 to manage other scripts. Not anything significantly revolutionary or useful - this project's purpose is mainly for learning.
 =======================================================================================
+[DEPENDENCIES]
+
+curl (optional, relied on by runweb)
+=======================================================================================
 [USAGE]
 
 ./scriptsmgr.sh [action] {additional arguments}
 
-[action] can be one of the following: run, edit, about
+[action] can be one of the following: run, runweb, edit, about
 =======================================================================================
 [ACTIONS]
 
 run [filename]: Attempts to run "$SCRIPT_DIR/[filename].sh" with your $PREF_SHELL
+runweb [URL]: Attempts to run a script from the Internet with $PREF_SHELL if curl is installed
 edit [filename]: Attempts to open "$SCRIPT_DIR/[filename].sh" with your $PREF_EDITOR
 about: Shows about information, including the text that probably led you to this file in the first place
 =======================================================================================
@@ -47,6 +52,10 @@ console that an error has been encountered. Set to a non-zero number to disable.
 Examples: 0, 1, 42
 =======================================================================================
 [CHANGELOG]
+
+1.1 (07/18/2022): 
+Added action runweb, which uses curl to run a script from the Internet
+Minor changes
 
 1.0 (07/17/2022): Initial release
 =======================================================================================
