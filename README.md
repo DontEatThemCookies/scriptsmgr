@@ -4,7 +4,7 @@ It's exactly what its name describes - manages your scripts. Full documentation 
 
 Tested on Raspberry Pi OS (Debian-based)
 
-Analyzed with `shellcheck`, tested on bash 5.1.4, tcsh 6.21, zsh 5.8, dash 0.5.11
+Analyzed with [shellcheck](https://github.com/koalaman/shellcheck), tested on bash 5.1.4, tcsh 6.21, zsh 5.8, dash 0.5.11
 
 ## Install
 ```sh
