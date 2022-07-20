@@ -1,6 +1,6 @@
 scriptsmgr - David Costell's Scripts Manager
 A shell script to manage other scripts, I guess?
-v1.1 [7/18/2022]
+v1.2 [7/20/2022]
 =======================================================================================
 [INTRODUCTION]
 
@@ -20,7 +20,7 @@ curl (optional, relied on by runweb)
 [ACTIONS]
 
 run [filename]: Attempts to run "$SCRIPT_DIR/[filename].sh" with your $PREF_SHELL
-runweb [URL]: Attempts to run a script from the Internet with $PREF_SHELL if curl is installed
+runweb [URL]: Attempts to run a script from the Internet with $PREF_SHELL if curl is installed (prompts you for confirmation first)
 edit [filename]: Attempts to open "$SCRIPT_DIR/[filename].sh" with your $PREF_EDITOR
 about: Shows about information, including the text that probably led you to this file in the first place
 =======================================================================================
@@ -50,8 +50,17 @@ Examples: "sh", "bash", "zsh"
 $NO_ERR_MSG (number): This is a setting controlling whether scriptsmgr outputs to the
 console that an error has been encountered. Set to a non-zero number to disable.
 Examples: 0, 1, 42
+
+$CURL_FLAGS (string): This contains the flags that curl will run with when runweb is invoked.
+Examples: "-fsSL"
 =======================================================================================
 [CHANGELOG]
+
+1.2 (07/20/2022):
+Added a confirmation prompt on runweb* (running scripts from the web is risky if you don't know what it does!)
+Added new configurable variable $CURL_FLAGS, which is detailed in the previous section ([CONFIG])
+Ensured scriptsmgr works with standard POSIX sh (added #!/bin/sh shebang, used shellcheck to analyze the script)
+* future versions may have a configurable setting to toggle this
 
 1.1 (07/18/2022): 
 Added action runweb, which uses curl to run a script from the Internet
@@ -64,4 +73,3 @@ Minor changes
 This concludes the complete documentation of scriptsmgr. Feel free to contact the dev
 regarding this software or this documentation (issues, suggestions, the whole 9 yards)
 =======================================================================================
-
