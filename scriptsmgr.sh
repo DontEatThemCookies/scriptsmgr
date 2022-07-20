@@ -27,7 +27,8 @@ case $1 in # parse $1 (action argument)
 			printf "curl is not installed\n"; exit
 		else
 			printf "Are you sure? (Y/N) "; read -r ANS
-			[ "$ANS" = "Y" ] || [ "$ANS" = "y" ] && curl $CURL_FLAGS "$2" | $PREF_SHELL || errormsg $?
+			if [ "$ANS" = "Y" ] || [ "$ANS" = "y" ]; then curl $CURL_FLAGS "$2" | $PREF_SHELL || errormsg $?; fi
+			exit
 		fi
 	;;
 	"edit")
