@@ -1,45 +1,44 @@
 #!/bin/sh
 # David Costell's Scripts Manager
-# v1.2 [07/20/22]
+# v1.3 [07/21/22]
 
 # CONFIG
-SCRIPTS_DIR="/home/$(whoami)/scripts" # The directory containing your scripts
+SCRIPTS_DIR="${HOME}/scripts" # The directory containing your scripts
 PREF_EDITOR="nano" # Your preferred editor (e.g. vi, nano)
 PREF_SHELL="bash" # Your preferred editor (e.g. bash, zsh)
-NO_ERR_MSG=0 # If this is set to a non-zero number errormsg() won't output anything
-CURL_FLAGS="-fsSL" # Flags to run curl with (e.g. -fsSL)
+EDITOR_FLAGS="" # Flags to run your preferred editor with (can be left blank "")
+SHELL_FLAGS="" # Flags to run your preferred shell with (can be left blank "")
+CURL_FLAGS="-fsSL" # Flags to run curl with (e.g. -fsSL) (can be left blank "")
+CHMOD_SCRIPTS=0 # If set to a non-zero number, chmod +x every unexecutable script edited
 # CONFIG END
 
-errormsg() {
-	[ $NO_ERR_MSG -eq 0 ] && (printf "An error may have just occurred. Last exit status was %s\n" "$?"; exit $?)
+prompt() {
+	printf "Are you sure? (Y/N) "; read -r ANS
+	[ "$ANS" = "Y" ] || [ "$ANS" = "y" ] && return 0 || return 1
 }
 
-type curl > /dev/null 2>&1 && CURL_PRESENT="true" # Check for curl
+curl --help > /dev/null 2>&1 && CURL_PRESENT=1 # Check for curl
 
 case $1 in # parse $1 (action argument)
 	"run")
 		# run [$2: file]
-		$PREF_SHELL "$SCRIPTS_DIR"/"$2".sh || errormsg $?
+		$PREF_SHELL $SHELL_FLAGS "$SCRIPTS_DIR"/"$2".sh
 	;;
 	"runweb")
 		# runweb [$2: URL]
-		if [ -z $CURL_PRESENT ]; then
-			printf "curl is not installed\n"; exit
-		else
-			printf "Are you sure? (Y/N) "; read -r ANS
-			if [ "$ANS" = "Y" ] || [ "$ANS" = "y" ]; then curl $CURL_FLAGS "$2" | $PREF_SHELL || errormsg $?; fi
-			exit
-		fi
+		[ -n "$CURL_PRESENT" ] && prompt
+		[ $? -ne 1 ] && curl $CURL_FLAGS "$2" | $PREF_SHELL || printf "curl is not installed in this system\n"; exit
 	;;
 	"edit")
 		# edit [$2: file]
-		$PREF_EDITOR "$SCRIPTS_DIR"/"$2".sh || errormsg $?
+		$PREF_EDITOR $EDITOR_FLAGS "$SCRIPTS_DIR"/"$2".sh
+		[ -x "$SCRIPTS_DIR"/"$2".sh ] || [ $CHMOD_SCRIPTS -ne 0 ] && chmod +x "$SCRIPTS_DIR"/"$2".sh
 	;;
 	"about")
-		printf "Scripts Manager v1.2 [07/20/22]\nby David Costell\n"
+		printf "Scripts Manager v1.3 by David Costell [07/21/2022]\nA shell script to manage other scripts\n"
 	;;
 	*)
 		# when [action] is none of the above (invalid)
-		printf "Usage: scriptsmgr [action] {additional arguments}\nFull documentation can be found in doc.txt\n"
+		printf "Usage: scriptsmgr [action] {any subargs needed by [action]}\nFull documentation can be found in doc.txt\n"
 	;;
 esac
